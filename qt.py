@@ -1,84 +1,30 @@
 import sys
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QHBoxLayout, QVBoxLayout,
-    QLabel, QFrame, QTextEdit,QPushButton
+    QApplication, QWidget, QTabWidget, QPushButton,
+    QTextEdit, QFrame, QVBoxLayout, QHBoxLayout
 )
 from PyQt6.QtGui import QIcon
-# 
-# def adjustmargin(layout):
-#         layout.setContentsMargins(0, 0, 0, 0)
-#         layout.setSpacing(0)
-# 
-# class MainWindow(QWidget):
-#     def __init__(self):
-#         super().__init__()
-#         self.setWindowTitle("Sticky Notes")
-#         self.setGeometry(100, 100, 400, 400)
-#         self.resize(400,400)
-#         self.init_ui()
-# 
-#     def init_ui(self):
-# 
-#         separator = QFrame()
-#         separator.setFrameShape(QFrame.Shape.HLine)
-#         separator.setFrameShadow(QFrame.Shadow.Sunken)
-# 
-#         w = self.width()
-#         h = self.height()
-#         y = 10
-#         btn_h = 30
-# 
-#         add_btn = QPushButton("✚", self)
-#         add_btn.setGeometry(10, y, 30, btn_h)
-#   
-# 
-#         done_btn = QPushButton(self)
-#         done_btn.setIcon(QIcon("checkmark.svg"))
-#         done_btn.setGeometry(w - 120, y, 50, btn_h)
-# 
-#         delete_btn = QPushButton(self)
-#         delete_btn.setIcon(QIcon("delete.svg"))
-#         delete_btn.setGeometry(w - 60, y, 50, btn_h) 
-# 
-#         text_edit = QTextEdit()
-#         text_edit.setStyleSheet("""
-#             QTextEdit {
-#                 background-color: lightpink;
-#                 color: black;
-#                 font-family: Consolas, monospace;
-#                 font-size: 14px;
-#                 border: 1px solid black;
-#                 padding: 6px;
-#             }
-#         """)
-# 
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     window = MainWindow()
-#     window.setStyleSheet("background-color: lightgrey")
-#     window.show()
-#     sys.exit(app.exec())
-# 
-
 
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setGeometry(10,10,400,400)
+        self.setGeometry(10, 10, 400, 400)
         self.setMinimumSize(400, 400)
         self.setWindowTitle("Sticky Notes")
 
-        self.add_btn = QPushButton("✚", self)
+        self.tabs = QTabWidget(self)
+        self.tab1 = QWidget()
+        self.tab2 = QWidget()
+        self.tabs.addTab(self.tab1, "Notes")
+        self.tabs.addTab(self.tab2, "Remind")
 
+        self.add_btn = QPushButton("✚", self)
         self.done_btn = QPushButton(self)
         self.done_btn.setIcon(QIcon("checkmark.svg"))
-
         self.delete_btn = QPushButton(self)
         self.delete_btn.setIcon(QIcon("delete.svg"))
-
-        self.settings_btn=QPushButton("⚙️",self)
-
-        self.search_btn=QPushButton("🔍",self)
+        self.settings_btn = QPushButton("⚙️", self)
+        self.search_btn = QPushButton("🔍", self)
 
         self.separator = QFrame(self)
         self.separator.setFrameShape(QFrame.Shape.HLine)
@@ -94,14 +40,21 @@ class MainWindow(QWidget):
                 padding: 6px;
             }
         """)
-        
+
+        layout1 = QVBoxLayout()
+        layout1.addWidget(self.text_edit)
+        self.tab1.setLayout(layout1)
+
+        layout2 = QVBoxLayout()
+        layout2.addWidget(QTextEdit("Reminders will go here..."))
+        self.tab2.setLayout(layout2)
+
         self.update_ui()
 
     def resizeEvent(self, event):
         self.update_ui()
 
     def update_ui(self):
-
         w = self.width()
         y = 10
         h = 30
@@ -112,7 +65,8 @@ class MainWindow(QWidget):
         self.done_btn.setGeometry(w - 80, y, 30, h)
         self.delete_btn.setGeometry(w - 40, y, 30, h)
         self.separator.setGeometry(0, y + h + 5, w, 1)
-        self.text_edit.setGeometry(10,y + h + 10,w - 20, self.height() - (y + h + 20))
+
+        self.tabs.setGeometry(0, y + h + 10, w, self.height() - (y + h + 10))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
