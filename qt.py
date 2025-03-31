@@ -26,27 +26,15 @@ class MainWindow(QWidget):
         self.settings_btn = QPushButton("⚙️", self)
         self.search_btn = QPushButton("🔍", self)
 
-        self.separator = QFrame(self)
-        self.separator.setFrameShape(QFrame.Shape.HLine)
-        self.separator.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.text_edit = QTextEdit(self)
-        self.text_edit.setStyleSheet("""
-            QTextEdit {
-                background-color: lightyellow;
-                color: black;
-                font-family: FiraCode Nerd Font, monospace;
-                font-size: 14px;
-                padding: 6px;
-            }
-        """)
+        space1= self.WritingSpace()
+        space2= self.WritingSpace()
 
         layout1 = QVBoxLayout()
-        layout1.addWidget(self.text_edit)
+        layout1.addWidget(space1)
         self.tab1.setLayout(layout1)
 
         layout2 = QVBoxLayout()
-        layout2.addWidget(QTextEdit("Reminders will go here..."))
+        layout2.addWidget(space2)
         self.tab2.setLayout(layout2)
 
         self.update_ui()
@@ -64,9 +52,20 @@ class MainWindow(QWidget):
         self.search_btn.setGeometry(90, y, 30, h)
         self.done_btn.setGeometry(w - 80, y, 30, h)
         self.delete_btn.setGeometry(w - 40, y, 30, h)
-        self.separator.setGeometry(0, y + h + 5, w, 1)
-
         self.tabs.setGeometry(0, y + h + 10, w, self.height() - (y + h + 10))
+
+    def WritingSpace(self):
+        self.text_edit = QTextEdit(self)
+        self.text_edit.setStyleSheet("""
+            QTextEdit {
+                background-color: lightyellow;
+                color: black;
+                font-family: FiraCode Nerd Font, monospace;
+                font-size: 14px;
+                padding: 6px;
+            }
+        """)
+        return self.text_edit
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
