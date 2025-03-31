@@ -63,6 +63,7 @@ class MainWindow(QWidget):
                 font-family: FiraCode Nerd Font, monospace;
                 font-size: 14px;
                 padding: 6px;
+                border: None;
             }
         """)
         return self.text_edit
