@@ -55,8 +55,8 @@ class MainWindow(QWidget):
         self.tabs.setGeometry(0, y + h + 10, w, self.height() - (y + h + 10))
 
     def WritingSpace(self):
-        self.text_edit = QTextEdit(self)
-        self.text_edit.setStyleSheet("""
+        text_edit = QTextEdit(self)
+        text_edit.setStyleSheet("""
             QTextEdit {
                 background-color: lightyellow;
                 color: black;
@@ -66,12 +66,7 @@ class MainWindow(QWidget):
                 border: None;
             }
         """)
-        return self.text_edit
+        return text_edit
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.setStyleSheet("background-color: lightyellow")
-    window.show()
-    sys.exit(app.exec())
+
 
