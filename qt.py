@@ -22,9 +22,9 @@ class MainWindow(QWidget):
 
         self.add_btn = QPushButton("✚", self)
         self.done_btn = QPushButton(self)
-        self.done_btn.setIcon(QIcon("checkmark.svg"))
+        self.done_btn.setIcon(QIcon("./assets/checkmark.svg"))
         self.delete_btn = QPushButton(self)
-        self.delete_btn.setIcon(QIcon("delete.svg"))
+        self.delete_btn.setIcon(QIcon("./assets/delete.svg"))
         self.settings_btn = QPushButton("⚙️", self)
         self.search_btn = QPushButton("🔍", self)
 
