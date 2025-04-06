@@ -3,9 +3,11 @@ from PyQt6.QtWidgets import (
     QApplication, QWidget, QTabWidget, QPushButton,
     QTextEdit, QFrame, QVBoxLayout, QHBoxLayout
 )
-from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QShortcut, QKeySequence
+from PyQt6.QtCore import QObject, QEvent
 
 class MainWindow(QWidget):
+
     def __init__(self):
         super().__init__()
         self.setGeometry(10, 10, 400, 400)
@@ -13,10 +15,10 @@ class MainWindow(QWidget):
         self.setWindowTitle("Sticky Notes")
 
         self.tabs = QTabWidget(self)
-        self.tab1 = QWidget()
-        self.tab2 = QWidget()
-        self.tabs.addTab(self.tab1, "Notes")
-        self.tabs.addTab(self.tab2, "Remind")
+        self.notesTab = QWidget()
+        self.reminderTab = QWidget()
+        self.tabs.addTab(self.notesTab, "Notes")
+        self.tabs.addTab(self.reminderTab, "Remind")
 
         self.add_btn = QPushButton("✚", self)
         self.done_btn = QPushButton(self)
@@ -26,16 +28,27 @@ class MainWindow(QWidget):
         self.settings_btn = QPushButton("⚙️", self)
         self.search_btn = QPushButton("🔍", self)
 
-        space1= self.WritingSpace()
-        space2= self.WritingSpace()
+        self.rawText= self.WritingSpace()
+        self.markdown= self.WritingSpace()
+        self.remind= self.WritingSpace()
 
-        layout1 = QVBoxLayout()
-        layout1.addWidget(space1)
-        self.tab1.setLayout(layout1)
+        self.markdown.setReadOnly(True) 
 
-        layout2 = QVBoxLayout()
-        layout2.addWidget(space2)
-        self.tab2.setLayout(layout2)
+        self.layout1 = QVBoxLayout()
+        self.layout1.addWidget(self.rawText)
+        self.layout1.addWidget(self.markdown)
+        self.notesTab.setLayout(self.layout1)
+
+        self.layout2 = QVBoxLayout()
+        self.layout2.addWidget(self.remind)
+        self.reminderTab.setLayout(self.layout2)
+
+        def hideNshow():
+            self.markdown.hide()
+            self.rawText.show()
+
+        self.shortcut_insert = QShortcut(QKeySequence('i'), self)
+        self.shortcut_insert.activated.connect(lambda:hideNshow())
 
         self.update_ui()
 
@@ -67,6 +80,5 @@ class MainWindow(QWidget):
             }
         """)
         return text_edit
-
 
 
