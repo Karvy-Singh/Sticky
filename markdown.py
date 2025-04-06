@@ -8,13 +8,12 @@ def markdownify(window):
     db=sql.StickyDB()
     
     text= window.rawText.toPlainText()
-    print(text)
-    db.save(str(window),text)
-
-    window.markdown.setMarkdown(db.read(str(window)))
+    window.markdown.setMarkdown(text)
 
     window.markdown.show()
     window.rawText.hide()
+
+    db.save(str(window),text)
 
 class WindowActivityMonitor(QObject):
     def __init__(self,window):
