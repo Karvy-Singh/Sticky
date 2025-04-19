@@ -14,8 +14,7 @@ style= "background-color: lightyellow;"
 def addButtonClick():
     new_window = qt.MainWindow()
     new_window.activateWindow()
-   
-    new_window.setStyleSheet("background-color: pink;")
+    new_window.setStyleSheet("background-color: lightyellow;")
     windows.append(new_window)
     new_window.add_btn.clicked.connect(addButtonClick)
     new_window.done_btn.clicked.connect(lambda:doneButtonClick(new_window))
@@ -23,6 +22,8 @@ def addButtonClick():
     monitor = markdown.WindowActivityMonitor(new_window)
     new_window.installEventFilter(monitor)
     monitors.append(monitor)
+
+    new_window.show()
 
 def doneButtonClick(window):
     markdown.markdownify(window)

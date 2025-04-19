@@ -43,9 +43,12 @@ class MainWindow(QWidget):
         self.layout2.addWidget(self.remind)
         self.reminderTab.setLayout(self.layout2)
 
+        self.markdown.show()
+        self.rawText.hide()
+
         def hideNshow():
-            self.markdown.hide()
-            self.rawText.show()
+            self.markdown.setVisible(not self.markdown.isVisible())
+            self.rawText.setVisible(not self.rawText.isVisible())
 
         self.shortcut_insert = QShortcut(QKeySequence('i'), self)
         self.shortcut_insert.activated.connect(lambda:hideNshow())
@@ -71,7 +74,7 @@ class MainWindow(QWidget):
         text_edit = QTextEdit(self)
         text_edit.setStyleSheet("""
             QTextEdit {
-                background-color: lightyellow;
+                background-color: pink;
                 color: black;
                 font-family: FiraCode Nerd Font, monospace;
                 font-size: 14px;
